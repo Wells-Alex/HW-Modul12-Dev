@@ -1,33 +1,17 @@
 package org.example.service;
 
-import org.example.dao.ClientDao;
 import org.example.entity.Client;
+import java.util.List;
 
-public class ClientCrudService {
+public interface ClientCrudService {
 
-    private final ClientDao dao = new ClientDao();
+    Client create(String name);
 
-    public Client create(String name) {
-        Client client = new Client();
-        client.setName(name);
+    Client getById(Long id);
 
-        dao.save(client);
-        return client;
-    }
+    List<Client> getAll();
 
-    public Client getById(Long id) {
-        return dao.getById(id);
-    }
+    Client update(Long id, String name);
 
-    public void update(Long id, String name) {
-        Client client = dao.getById(id);
-        client.setName(name);
-
-        dao.update(client);
-    }
-
-    public void delete(Long id) {
-        Client client = dao.getById(id);
-        dao.delete(client);
-    }
+    void delete(Long id);
 }

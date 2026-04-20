@@ -1,15 +1,17 @@
 package org.example.service;
 
-import org.example.dao.ClientDao;
+import org.example.dao.ClientDaoService;
+import org.example.dao.ClientDaoServiceImpl;
 import org.example.entity.Client;
 
 import java.util.List;
 
-public class ClientService {
+public class ClientCrudServiceImpl implements ClientCrudService {
 
-    private final ClientDao dao = new ClientDao();
+    private final ClientDaoService dao = new ClientDaoServiceImpl();
 
     // CREATE
+    @Override
     public Client create(String name) {
         Client client = new Client();
         client.setName(name);
@@ -19,25 +21,35 @@ public class ClientService {
     }
 
     // READ
+    @Override
     public Client getById(Long id) {
         return dao.getById(id);
     }
 
+    @Override
     public List<Client> getAll() {
         return dao.getAll();
     }
 
     // UPDATE
-    public void update(Long id, String name) {
+    @Override
+    public Client update(Long id, String name) {
         Client client = dao.getById(id);
-        client.setName(name);
 
-        dao.update(client);
+        if (client != null) {
+            client.setName(name);
+            dao.update(client);
+        }
+
+        return client;
     }
 
     // DELETE
+    @Override
     public void delete(Long id) {
         Client client = dao.getById(id);
-        dao.delete(client);
+        if (client != null) {
+            dao.delete(client);
+        }
     }
 }

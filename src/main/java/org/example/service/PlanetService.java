@@ -1,44 +1,18 @@
 package org.example.service;
 
-import org.example.dao.PlanetDao;
 import org.example.entity.Planet;
 
 import java.util.List;
 
-public class PlanetService {
+public interface PlanetService {
 
-    private final PlanetDao dao = new PlanetDao();
+    Planet create(String id, String name);
 
-    // CREATE
-    public Planet create(String id, String name) {
-        Planet planet = new Planet();
-        planet.setId(id);
-        planet.setName(name);
+    Planet getById(String id);
 
-        dao.save(planet);
-        return planet;
-    }
+    List<Planet> getAll();
 
-    // READ
-    public Planet getById(String id) {
-        return dao.getById(id);
-    }
+    void update(String id, String name);
 
-    public List<Planet> getAll() {
-        return dao.getAll();
-    }
-
-    // UPDATE
-    public void update(String id, String name) {
-        Planet planet = dao.getById(id);
-        planet.setName(name);
-
-        dao.update(planet);
-    }
-
-    // DELETE
-    public void delete(String id) {
-        Planet planet = dao.getById(id);
-        dao.delete(planet);
-    }
+    void delete(String id);
 }

@@ -3,7 +3,9 @@ package org.example;
 import org.example.entity.Client;
 import org.example.entity.Planet;
 import org.example.service.ClientCrudService;
-import org.example.service.PlanetCrudService;
+import org.example.service.ClientCrudServiceImpl;
+import org.example.service.PlanetService;
+import org.example.service.PlanetServiceImpl;
 import org.example.util.FlywayMigration;
 import org.example.util.HibernateUtil;
 
@@ -15,8 +17,8 @@ public class Main {
 
         System.out.println("\n=== CRUD TEST ===");
 
-        ClientCrudService clientService = new ClientCrudService();
-        PlanetCrudService planetService = new PlanetCrudService();
+        ClientCrudService clientService = new ClientCrudServiceImpl();
+        PlanetService planetService = new PlanetServiceImpl();
 
         // =========================
         // CREATE

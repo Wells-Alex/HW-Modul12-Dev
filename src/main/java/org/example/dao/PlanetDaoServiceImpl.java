@@ -1,39 +1,42 @@
 package org.example.dao;
 
-import org.example.entity.Client;
+import org.example.entity.Planet;
 import org.example.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import java.util.List;
 import java.util.function.Consumer;
 
-import java.util.List;
+public class PlanetDaoServiceImpl implements PlanetDaoService {
 
-public class ClientDao {
-
-    public void save(Client client) {
-        execute(session -> session.persist(client));
+    @Override
+    public void save(Planet planet) {
+        execute(session -> session.persist(planet));
     }
 
-    public Client getById(Long id) {
+    @Override
+    public Planet getById(String id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.find(Client.class, id);
+            return session.find(Planet.class, id);
         }
     }
 
-    public List<Client> getAll() {
+    @Override
+    public List<Planet> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from Client", Client.class).list();
+            return session.createQuery("from Planet", Planet.class).list();
         }
     }
 
-    public void update(Client client) {
-        execute(session -> session.merge(client));
+    @Override
+    public void update(Planet planet) {
+        execute(session -> session.merge(planet));
     }
 
-    public void delete(Client client) {
+    @Override
+    public void delete(Planet planet) {
         execute(session -> {
-            Client managed = session.merge(client);
+            Planet managed = session.merge(planet);
             session.remove(managed);
         });
     }
@@ -48,7 +51,7 @@ public class ClientDao {
 
             tx.commit();
         } catch (Exception e) {
-            if (tx != null) tx.rollback();
+            if (tx != null && tx.isActive()) tx.rollback();
             throw e;
         }
     }
